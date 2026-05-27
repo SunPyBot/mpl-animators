@@ -30,7 +30,7 @@ from mpl_animators import ArrayAnimatorWCS
 map_sequence = sunpy.map.Map(AIA_171_IMAGE, AIA_193_IMAGE, sequence=True)
 
 # Now we can just cast the sequence away into a NumPy array.
-sequence_array = map_sequence.as_array()
+sequence_array = map_sequence.data
 
 # We'll also define a common normalization to use in the animations
 norm = ImageNormalize(vmin=0, vmax=3e4, stretch=AsinhStretch(0.01))
@@ -42,7 +42,7 @@ norm = ImageNormalize(vmin=0, vmax=3e4, stretch=AsinhStretch(0.01))
 # ``map_sequence``.
 
 # Now we need to get the time difference between the two observations.
-t0, t1 = map(parse_time, [k["date-obs"] for k in map_sequence.all_meta()])
+t0, t1 = map(parse_time, [k["date-obs"] for k in map_sequence.meta])
 time_diff = (t1 - t0).to(u.s)
 
 m = map_sequence[0]
